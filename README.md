@@ -2,3 +2,6 @@
 IntelliJ Plugin • SEO Article
 
 
+## Example
+
+See Example in [doc/Markdown.xml](doc/Markdown.xml)

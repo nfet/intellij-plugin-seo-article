@@ -1,0 +1,18 @@
+<templateSet group="Markdown">
+    <template name="jekyll header" value="Title: &quot;$TITLE$&quot;&#10;$END$" description="jekyl header" toReformat="false" toShortenFQNames="true">
+        <variable name="TITLE" expression="articleTitle()" defaultValue="" alwaysStopAt="false" />
+        <context>
+            <option name="GROOVY" value="false" />
+            <option name="HTML" value="false" />
+            <option name="JAVA_CODE" value="false" />
+            <option name="JSON" value="false" />
+            <option name="KOTLIN" value="false" />
+            <option name="MAVEN" value="false" />
+            <option name="OTHER" value="true" />
+            <option name="Properties" value="false" />
+            <option name="SHELL_SCRIPT" value="false" />
+            <option name="XML" value="false" />
+            <option name="XML_ATTRIBUTE" value="false" />
+        </context>
+    </template>
+</templateSet>
