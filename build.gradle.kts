@@ -16,7 +16,9 @@ repositories {
 intellij {
     // examples: 2022.3.3, 2022.3, 2023.2
     version.set("2022.3")
-    type.set("IC") // Target IDE Platform
+    // Target IDE Platforms
+    // IC = Community, IU = Ultimate
+    type.set("IC")
 
     plugins.set(listOf(/* Plugin Dependencies */))
 }
