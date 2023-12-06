@@ -3,7 +3,6 @@ package com.kapresoft.intellij.seoa.seoarticle;
 import com.intellij.codeInsight.template.EverywhereContextType;
 import com.intellij.codeInsight.template.Expression;
 import com.intellij.codeInsight.template.ExpressionContext;
-import com.intellij.codeInsight.template.HtmlContextType;
 import com.intellij.codeInsight.template.Result;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.codeInsight.template.TextResult;
@@ -18,9 +17,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
+@SuppressWarnings("unused")
 public class JekyllTitleFunction extends MacroBase {
 
     private static final Logger LOG = Logger.getInstance(JekyllTitleFunction.class);
@@ -29,7 +31,9 @@ public class JekyllTitleFunction extends MacroBase {
 
     private static final String[] KEYWORDS = {
             "springboot = Spring Boot •",
-            "spring = Spring •"
+            "spring = Spring •",
+            "java = Java •",
+            "health = Health •"
     };
     private final Map<String, String> keywordMap;
 
@@ -78,15 +82,13 @@ public class JekyllTitleFunction extends MacroBase {
 
     @Override
     protected @Nullable Result calculateResult(Expression @NotNull [] params, ExpressionContext context, boolean quick) {
-        var doc = context.getEditor().getDocument();
-        var proj = context.getProject();
-        var psiFile = context.getPsiElementAtStartOffset().getContainingFile();
-        if (Optional.ofNullable(psiFile).isEmpty()) {
-            return new TextResult("ERROR");
-        }
-        String name = psiFile.getName();
-        String title = toTitleCase(name);
-        return new TextResult(title);
+        final AtomicReference<String> title = new AtomicReference<>("ERROR");
+        ofNullable(context.getPsiElementAtStartOffset()).ifPresent(p -> {
+            var file = p.getContainingFile();
+            String name = file.getName();
+            title.set(toTitleCase(name));
+        });
+        return new TextResult(title.get());
     }
 
     @Override
